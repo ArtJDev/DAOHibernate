@@ -14,7 +14,8 @@ public class DaoRepository {
     EntityManager em;
 
     public List<PersonEntity> getPersonsByCity(String city) {
-        Query query = em.createNativeQuery("select * from persons where city_of_living like 'Moscow'");
+        Query query = em.createNativeQuery("select * from persons where city_of_living like :city")
+                .setParameter("city", city);
         return query.getResultList();
     }
 }
