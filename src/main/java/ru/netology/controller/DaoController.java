@@ -23,19 +23,19 @@ public class DaoController {
     //localhost:8080/persons/by-city?city=moscow
     @GetMapping("/by-city")
     public ResponseEntity<List<PersonEntity>> getPersonsByCity(@RequestParam String city) {
-        List<PersonEntity> personsByCity = daoRepository.findByCityOfLiving(city);
+        List<PersonEntity> personsByCity = daoRepository.findPersonsByCity(city);
         return ResponseEntity.ok().body(personsByCity);
     }
     //localhost:8080/persons/by-age-under?age=30
     @GetMapping("/by-age-under")
     public ResponseEntity<List<PersonEntity>> getPersonsByAge(@RequestParam int age) {
-        List<PersonEntity> personsByAgeUnder = daoRepository.findByAgeLessThanOrderByAge(age);
+        List<PersonEntity> personsByAgeUnder = daoRepository.findPersonsByAge(age);
         return ResponseEntity.ok().body(personsByAgeUnder);
     }
     //localhost:8080/persons/by-name-surname?name=john&surname=smith
     @GetMapping("/by-name-surname")
     public ResponseEntity<Optional<PersonEntity>> getPersonsByNameAndSurname(@RequestParam String name, String surname) {
-        Optional<PersonEntity> personsByNameAndSurname = daoRepository.findByNameAndSurname(name, surname);
+        Optional<PersonEntity> personsByNameAndSurname = daoRepository.findPersonsByNames(name, surname);
         return ResponseEntity.ok().body(personsByNameAndSurname);
     }
 }
