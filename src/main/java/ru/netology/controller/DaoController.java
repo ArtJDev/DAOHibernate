@@ -20,8 +20,7 @@ public class DaoController {
     }
 
     @GetMapping("/by-city")
-
-    public ResponseEntity<List<PersonEntity>> getProduct(@RequestParam String city) {
+    public ResponseEntity<List<PersonEntity>> getPersons(@RequestParam String city) {
         List<PersonEntity> names = daoRepository.getPersonsByCity(city);
         return ResponseEntity.ok().body(names);
     }
