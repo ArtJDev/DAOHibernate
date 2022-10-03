@@ -9,6 +9,7 @@ import ru.netology.entities.PersonEntity;
 import ru.netology.repositories.DaoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/persons")
@@ -19,9 +20,22 @@ public class DaoController {
         this.daoRepository = daoRepository;
     }
 
+    //localhost:8080/persons/by-city?city=moscow
     @GetMapping("/by-city")
-    public ResponseEntity<List<PersonEntity>> getPersons(@RequestParam String city) {
-        List<PersonEntity> names = daoRepository.getPersonsByCity(city);
-        return ResponseEntity.ok().body(names);
+    public ResponseEntity<List<PersonEntity>> getPersonsByCity(@RequestParam String city) {
+        List<PersonEntity> personsByCity = daoRepository.findByCityOfLiving(city);
+        return ResponseEntity.ok().body(personsByCity);
+    }
+    //localhost:8080/persons/by-age-under?age=30
+    @GetMapping("/by-age-under")
+    public ResponseEntity<List<PersonEntity>> getPersonsByAge(@RequestParam int age) {
+        List<PersonEntity> personsByAgeUnder = daoRepository.findByAgeLessThanOrderByAge(age);
+        return ResponseEntity.ok().body(personsByAgeUnder);
+    }
+    //localhost:8080/persons/by-name-surname?name=john&surname=smith
+    @GetMapping("/by-name-surname")
+    public ResponseEntity<Optional<PersonEntity>> getPersonsByNameAndSurname(@RequestParam String name, String surname) {
+        Optional<PersonEntity> personsByNameAndSurname = daoRepository.findByNameAndSurname(name, surname);
+        return ResponseEntity.ok().body(personsByNameAndSurname);
     }
 }

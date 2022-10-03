@@ -1,21 +1,17 @@
 package ru.netology.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.netology.entities.PersonEntity;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class DaoRepository {
-    @PersistenceContext
-    EntityManager em;
+public interface DaoRepository extends JpaRepository<PersonEntity, Long> {
+    List<PersonEntity> findByCityOfLiving(String city);
 
-    public List<PersonEntity> getPersonsByCity(String city) {
-        Query query = em.createNativeQuery("select * from persons where city_of_living like :city")
-                .setParameter("city", city);
-        return query.getResultList();
-    }
+    List<PersonEntity> findByAgeLessThanOrderByAge(int age);
+
+    Optional<PersonEntity> findByNameAndSurname(String name, String surname);
 }
